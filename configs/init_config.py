@@ -6,6 +6,7 @@ from configs.s3fd import s3fd_config
 from configs.resnet import resnet_config
 from configs.chanet import chanet_config
 from configs.fpnssd_v_caption import fpnssd_v_caption_config
+from configs.resnet_nas import resnet_nas_config
 
 
 def init_config(args):
@@ -38,6 +39,9 @@ def init_config(args):
 
     elif model_name == 'chanet':
         opt = chanet_config(args)
+
+    elif model_name == 'resnet_nas':
+        opt = resnet_nas_config(args)
 
     else:
         raise ValueError('[!] model not found!')

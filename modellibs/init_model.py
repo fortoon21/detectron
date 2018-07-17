@@ -116,6 +116,14 @@ def init_model(opt):
             from modellibs.chanet.chanet import chanet18
             model = chanet18(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
 
+    elif model_name == 'resnet_nas':
+        if opt.resnet_model == 'resnet18':
+            from modellibs.resnet_nas.resnet_nas import resnet18_nas
+            model = resnet18_nas(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
+        elif opt.resnet_model == 'resnet50':
+            from modellibs.resnet_nas.resnet_nas import resnet50_nas
+            model = resnet50_nas(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
+
     else:
         raise ValueError('Not implemented yet')
 
