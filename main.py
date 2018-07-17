@@ -16,20 +16,20 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--command', type=str, default='train')
-    parser.add_argument('--dataset', type=str, default='v_caption_detection')
-    parser.add_argument('--task', type=str, default='detection')
-    parser.add_argument('--model', type=str, default='fpnssd_v_caption')
+    parser.add_argument('--dataset', type=str, default='v_caption_patch_nas')
+    parser.add_argument('--task', type=str, default='classification')
+    parser.add_argument('--model', type=str, default='resnet_nas')
     parser.add_argument('--resume', type=bool, default=False)
     parser.add_argument('--resume_path', type=str, default='/home/son/PycharmProjects/Object_Detection/detectron/experiments/v_caption_classification_resnet/v_caption_classification_resnet_best_loss_0.180272/model_best.pth')
 
-    parser.add_argument('--data_root_dir', type=str, default='/media/son/Repository2')
+    parser.add_argument('--data_root_dir', type=str, default='/home/jade/ws/vdotdo')
 
     parser.add_argument('--batch_size_train', type=int, default=128)
     parser.add_argument('--batch_size_valid', type=int, default=256)
     parser.add_argument('--batch_size_test', type=int, default=32)
 
     parser.add_argument('--num_workers', type=int, default=8)
-    parser.add_argument('--num_gpus', type=str, default=[0, 1])
+    parser.add_argument('--num_gpus', type=str, default=[0])
 
     parser.add_argument('--print_freq', type=int, default=10)
     parser.add_argument('--print_freq_eval', type=int, default=100)

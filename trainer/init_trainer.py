@@ -60,6 +60,13 @@ def init_trainer(opt, trainloader, validloader, model):
                           validloader,
                           model)
 
+    elif model_name == 'resnet_nas':
+        from trainer.train_resnet_nas import Trainer
+        trainer = Trainer(opt,
+                          trainloader,
+                          validloader,
+                          model)
+
     else:
         raise ValueError('not a valid model')
 

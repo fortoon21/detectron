@@ -108,6 +108,20 @@ def init_dataloader_train(opt):
                                        num_workers=opt.num_workers,
                                        pin_memory=True)
 
+    elif dataset_name == 'v_caption_patch_nas':
+        from datasets.v_caption_patch_nas import V_Caption_Patch_NAS
+        data_root = os.path.join(opt.data_root_dir, '')
+        list_file = ['data/v_caption_detection/bgalphabet_patch_train.txt','data/v_caption_detection/bghangul_patch_train.txt','data/v_caption_detection/bgnumber_patch_train.txt']
+        dataset = V_Caption_Patch_NAS(root=data_root,
+                                 list_file=list_file,
+                                 transform=transform)
+
+        loader = dataloader.DataLoader(dataset=dataset,
+                                       batch_size=batch_size,
+                                       shuffle=True,
+                                       num_workers=opt.num_workers,
+                                       pin_memory=True)
+
     else:
         raise ValueError('Not a valid dataset')
 
@@ -202,9 +216,25 @@ def init_dataloader_valid(opt):
 
     elif dataset_name == 'v_caption_patch':
         from datasets.v_caption_patch import V_Caption_Patch
-        data_root = os.path.join(opt.data_root_dir, 'V.DO/V_Caption')
+        data_root = os.path.join(opt.data_root_dir, '')
         list_file = 'data/v_caption_patch_hangul/patch_val.txt'
         dataset = V_Caption_Patch(root=data_root,
+                                 list_file=list_file,
+                                 transform=transform)
+
+        loader = dataloader.DataLoader(dataset=dataset,
+                                       batch_size=batch_size,
+                                       shuffle=False,
+                                       num_workers=opt.num_workers,
+                                       pin_memory=True)
+
+    elif dataset_name == 'v_caption_patch_nas':
+        from datasets.v_caption_patch_nas import V_Caption_Patch_NAS
+        data_root = os.path.join(opt.data_root_dir, '')
+
+
+        list_file = ['data/v_caption_detection/bgalphabet_patch_val.txt','data/v_caption_detection/bghangul_patch_val.txt', 'data/v_caption_detection/bgnumber_patch_val.txt' ]
+        dataset = V_Caption_Patch_NAS(root=data_root,
                                  list_file=list_file,
                                  transform=transform)
 
@@ -261,7 +291,7 @@ def init_dataloader_test(opt):
                                        shuffle=False,
                                        num_workers=opt.num_workers)
 
-    elif dataset_name == 'v_caption_patch':
+    elif dataset_name == 'v_caption_patch_nas':
         from datasets.v_caption_patch import V_Caption_Patch
         data_root = os.path.join(opt.data_root_dir, 'V.DO/V_Caption')
         list_file = 'data/v_caption_patch_hangul/patch_val.txt'
