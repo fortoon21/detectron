@@ -156,7 +156,7 @@ class FPN(nn.Module):
         return p2, p3, p4, p5, p6, p7, p8, p9
 
 
-def FPNSE50():
+def FPN50():
     return FPN(Bottleneck, [3,4,6,3])
 
 def FPN101():

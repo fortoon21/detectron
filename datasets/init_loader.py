@@ -83,7 +83,7 @@ def init_dataloader_train(opt):
 
     elif dataset_name == 'v_caption_detection':
         from datasets.v_caption_detection import V_Caption_Detection
-        data_root = os.path.join(opt.data_root_dir, 'V.DO/caption')
+        data_root = os.path.join(opt.data_root_dir, 'V.DO/caption/background_result')
         list_file = 'data/v_caption_detection/caption_BG_train.txt'
         dataset = V_Caption_Detection(root=data_root,
                                  list_file=list_file,
@@ -203,7 +203,7 @@ def init_dataloader_valid(opt):
 
     elif dataset_name == 'v_caption_detection':
         from datasets.v_caption_detection import V_Caption_Detection
-        data_root = os.path.join(opt.data_root_dir, 'V.DO/caption')
+        data_root = os.path.join(opt.data_root_dir, 'V.DO/caption/background_result')
         list_file = 'data/v_caption_detection/caption_BG_val.txt'
         dataset = V_Caption_Detection(root=data_root,
                                  list_file=list_file,

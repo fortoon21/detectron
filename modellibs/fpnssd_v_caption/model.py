@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from modellibs.fpnssd.fpn import FPN50
+from modellibs.fpnssd_v_caption.fpn import FPN50
 
 
 class FPNSSD_V_CAPTION(nn.Module):

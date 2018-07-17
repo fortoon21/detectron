@@ -8,12 +8,11 @@ from utils.box import box_iou, box_nms, change_box_order
 
 
 class FPNSSDBoxCoder:
-    def __init__(self, model):
-        self.model = model
-        self.steps = model.steps
-        self.box_sizes = model.box_sizes
-        self.aspect_ratios = model.aspect_ratios
-        self.fm_sizes = model.fm_sizes
+    def __init__(self, opt):
+        self.steps = opt.steps
+        self.box_sizes = opt.box_sizes
+        self.aspect_ratios = opt.aspect_ratios
+        self.fm_sizes = opt.fm_sizes
         self.default_boxes = self._get_default_boxes()
         self.default_boxes_new = self._get_default_boxes_new()
 
@@ -78,9 +77,11 @@ class FPNSSDBoxCoder:
         Reference:
           https://github.com/chainer/chainercv/blob/master/chainercv/links/model/ssd/multibox_coder.py
         '''
+
         def argmax(x):
+            '''Find the max value index(row & col) of a 2D tensor.'''
             v, i = x.max(0)
-            j = v.max(0)[1][0]
+            j = v.max(0)[1].item()
             return (i[j], j)
 
         default_boxes = self.default_boxes_new  # xywh

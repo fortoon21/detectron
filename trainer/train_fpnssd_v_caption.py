@@ -23,7 +23,6 @@ class Trainer(object):
         self.max_iter_valid = len(self.valid_dataloader)
 
         self.model = model
-        self.box_coder = FPNSSDBoxCoder(self.model)
 
         self.criterion = SSDLoss(opt.num_classes)
         self.optimizer = torch.optim.SGD(model.parameters(), lr=opt.lr, momentum=opt.momentum, weight_decay=opt.weight_decay)
@@ -39,7 +38,7 @@ class Trainer(object):
             self.best_loss = checkpoint['loss']
             self.start_epoch = checkpoint['epoch'] + 1
 
-    def train_model(self, max_epoch):
+    def train_model(self, max_epoch, learning_rate):
 
         self.max_epoch = max_epoch
 
