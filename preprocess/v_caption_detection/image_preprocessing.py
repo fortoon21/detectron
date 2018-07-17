@@ -226,32 +226,29 @@ if __name__=='__main__':
     result_dict['{}etc'.format(Is_bg)] = dict()
     result_dict['{}non_single'.format(Is_bg)] = dict()
 
-
     anno_dic={}
     json_files = [pos_json for pos_json in os.listdir(args.anno_root) if pos_json.endswith('.json') and pos_json.startswith('ocr') ]
-
 
     for file in json_files:
         with open(os.path.join(anno_root, file)) as f:
             anno_dic[file[:-5]]= json.load(f)
 
     for key, anno in anno_dic.items():
-        print('Start ',key)
+        print('Start ', key)
         count = 0
         if key.startswith('background'):
-            Is_bg="bg"
-        else : Is_bg=""
-
-
+            Is_bg = "bg"
+        else:
+            Is_bg = ""
 
         stat_dict = dict()
         stat_dict['first'] = dict()
         stat_dict['middle'] = dict()
         stat_dict['last'] = dict()
 
-        save_dirh='{}hangul_patch'.format(Is_bg)
-        save_dira='{}alphabet_patch'.format(Is_bg)
-        save_dirn='{}number_patch'.format(Is_bg)
+        save_dirh = '{}hangul_patch'.format(Is_bg)
+        save_dira = '{}alphabet_patch'.format(Is_bg)
+        save_dirn = '{}number_patch'.format(Is_bg)
         save_dirs = '{}symbol_patch'.format(Is_bg)
 
         make_dir(os.path.join(args.anno_root, save_dirh))
@@ -274,7 +271,7 @@ if __name__=='__main__':
 
             divider = random.randint(0, 9)
             if divider <= 1:
-                f = [f_h2, f_a2,f_n2, f_s2] # validation set
+                f = [f_h2, f_a2, f_n2, f_s2]  # validation set
             else:
                 f = [f_h1, f_a1, f_n1, f_s1]  # training set
             # if clip_name in args.valid_set:
@@ -325,7 +322,7 @@ if __name__=='__main__':
                         else:
                             clip_count += 1
 
-                    if is_hangul(caption) :
+                    if is_hangul(caption):
 
                         image_path = os.path.join(save_dirh,
                                                   '{}_{}_{}.jpg'.format(clip_name, image_name_edited, sub_count))
@@ -380,7 +377,6 @@ if __name__=='__main__':
                             write_txtnimg(f[3], anno_root, [clip_name, image_name_edited, sub_count, save_dirs],
                                           cropped_img)
                             f[3].write(' ' + str(class_num) + '\n')
-
 
                 count += 1
 

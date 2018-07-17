@@ -77,85 +77,82 @@ def is_number(phrase): # TODO: need tuning!!
     return True
 
 def class_assign(caption):
-    try:
-        if len(caption) == 1:
-            if is_hangul(caption):
+    if len(caption) == 1:
+        if is_hangul(caption):
 
-                if is_jamo(caption):
+            if is_jamo(caption):
 
-                    if caption in result_dict['hangul_jamo']:
-                        result_dict['hangul_jamo'][caption] += 1
-                    else:
-                        result_dict['hangul_jamo'][caption] = 1
-
-                    class_num = 6
-
+                if caption in result_dict['hangul_jamo']:
+                    result_dict['hangul_jamo'][caption] += 1
                 else:
+                    result_dict['hangul_jamo'][caption] = 1
 
-                    if caption in result_dict['hangul']:
-                        result_dict['hangul'][caption] += 1
-                    else:
-                        result_dict['hangul'][caption] = 1
-
-                    eumso_list = hgtk.letter.decompose(caption)
-                    middle_sung = eumso_list[1]
-                    last_sung = eumso_list[2]
-
-                    if last_sung == JONG[0]:
-                        if middle_sung in JOONG[:9]:
-                            class_num = 0
-                        elif middle_sung in JOONG[9:14]:
-                            class_num = 1
-                        elif middle_sung in JOONG[14:]:
-                            class_num = 2
-                    elif last_sung in JONG[1:]:
-                        if middle_sung in JOONG[0:9]:
-                            class_num = 3
-                        elif middle_sung in JOONG[9:14]:
-                            class_num = 4
-                        elif middle_sung in JOONG[14:]:
-                            class_num = 5
-                    else:
-                        raise ValueError
-
-            elif is_alphabet(caption):
-
-                if caption in result_dict['alphabet']:
-                    result_dict['alphabet'][caption] += 1
-                else:
-                    result_dict['alphabet'][caption] = 1
-
-                class_num = 7
-
-            elif is_number(caption):
-
-                if caption in result_dict['number']:
-                    result_dict['number'][caption] += 1
-                else:
-                    result_dict['number'][caption] = 1
-
-                class_num = 8
+                class_num = 6
 
             else:
-                if caption in result_dict['etc']:
-                    result_dict['etc'][caption] += 1
-                else:
-                    result_dict['etc'][caption] = 1
 
-                class_num = 9
+                if caption in result_dict['hangul']:
+                    result_dict['hangul'][caption] += 1
+                else:
+                    result_dict['hangul'][caption] = 1
+
+                eumso_list = hgtk.letter.decompose(caption)
+                middle_sung = eumso_list[1]
+                last_sung = eumso_list[2]
+
+                if last_sung == JONG[0]:
+                    if middle_sung in JOONG[:9]:
+                        class_num = 0
+                    elif middle_sung in JOONG[9:14]:
+                        class_num = 1
+                    elif middle_sung in JOONG[14:]:
+                        class_num = 2
+                elif last_sung in JONG[1:]:
+                    if middle_sung in JOONG[0:9]:
+                        class_num = 3
+                    elif middle_sung in JOONG[9:14]:
+                        class_num = 4
+                    elif middle_sung in JOONG[14:]:
+                        class_num = 5
+                else:
+                    raise ValueError
+
+        elif is_alphabet(caption):
+
+            if caption in result_dict['alphabet']:
+                result_dict['alphabet'][caption] += 1
+            else:
+                result_dict['alphabet'][caption] = 1
+
+            class_num = 7
+
+        elif is_number(caption):
+
+            if caption in result_dict['number']:
+                result_dict['number'][caption] += 1
+            else:
+                result_dict['number'][caption] = 1
+
+            class_num = 8
 
         else:
-            if caption in result_dict['non_single']:
-                result_dict['non_single'][caption] += 1
+            if caption in result_dict['etc']:
+                result_dict['etc'][caption] += 1
             else:
-                result_dict['non_single'][caption] = 1
+                result_dict['etc'][caption] = 1
 
-            if caption == '...':
-                class_num = 9
-            else:
-                class_num = 10000
-    except:
-        class_num = 10000
+            class_num = 9
+
+    else:
+        if caption in result_dict['non_single']:
+            result_dict['non_single'][caption] += 1
+        else:
+            result_dict['non_single'][caption] = 1
+
+        if caption == '...':
+            class_num = 9
+        else:
+            class_num = 10000
 
     return class_num
 
@@ -163,19 +160,22 @@ def class_assign(caption):
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--anno_root", type=str, default="/media/son/Repository2/V.DO/V_Caption")
+    parser.add_argument("--anno_root", type=str, default="/home/vdo/SSD2TB/V_Caption/dataset")
     parser.add_argument("--valid_set", type=list, default=['000481', '000482', '001293', '001294', '001771', '001772'])
-    parser.add_argument("--task_name", type=str, default='ocr_demo2')
+    # parser.add_argument("--json_files",type=list, default=['ocr_demo2.json', 'ocr_demo3.json', 'ocr_demo5.json', 'ocr_demo6.json', 'ocr_demo7.json'])
+    parser.add_argument("--json_files",type=list, default=['background_result.json'])
 
     args = parser.parse_args()
 
     anno_root = args.anno_root
 
-    with open(os.path.join(anno_root, '{}.json'.format(args.task_name))) as f:
-        anno = json.load(f)
+    anno_dic={}
+    for file in args.json_files:
+        with open(os.path.join(anno_root, file)) as f:
+            anno_dic[file[:-5]]= json.load(f)
 
-    f_1 = open('caption_train.txt', 'w')
-    f_2 = open('caption_val.txt', 'w')
+    f_1 = open('caption_BG_train.txt', 'w')
+    f_2 = open('caption_BG_val.txt', 'w')
 
     result_dict = dict()
     result_dict['hangul'] = dict()
@@ -184,54 +184,83 @@ if __name__=='__main__':
     result_dict['alphabet'] = dict()
     result_dict['etc'] = dict()
     result_dict['non_single'] = dict()
+    result_dict['error'] = dict()
 
     count = 0
-    for clip in anno['annotation']['clips']:
+    for key, anno in anno_dic.items():
 
-        clip_name = clip['clip_name']
+        for clip in anno['annotation']['clips']:
 
-        if clip_name in args.valid_set:
-            f = f_2  # validation set
-        else:
-            f = f_1  # training set
+            clip_name = clip['clip_name']
 
-        for image in clip['images']:
+            # if clip_name in args.valid_set:
+            #     f = f_2  # validation set
+            # else:
+            #     f = f_1  # training set
+            divider = random.randint(0, 9)
+            if divider <= 0:
+                f = f_1  # training set
+            else:
+                f = f_2  # validation set
 
-            image_name = image['filename']
-            im = cv2.imread(os.path.join(anno_root, args.task_name, clip_name, image_name))
-            image_path = os.path.join(clip_name, image_name)
-            f.write(image_path)
 
-            for bbox in image['bbox']:
+            for image in clip['images']:
 
-                # class number assign with caption
-                caption = bbox['caption']
-                try:
-                    len(caption)
-                except:
-                    print('debug')
-                class_num = class_assign(caption)
-                if class_num == 10000:
-                    continue
+                image_name = image['filename']
+                im = cv2.imread(os.path.join(anno_root, key, clip_name, image_name))
+                image_path = os.path.join(clip_name, image_name)
+                f.write(image_path)
 
-                x1 = bbox['start_x']
-                y1 = bbox['start_y']
-                x2 = bbox['end_x']
-                y2 = bbox['end_y']
+                for bbox in image['bbox']:
 
-                bbox_xyxy = [x1, y1, x2, y2]
-                for coord in bbox_xyxy:
-                    coord = str(int(coord))
+                    # class number assign with caption
+                    caption = bbox['caption']
+                    try:
+                        len(caption)
+                    except:
+                        print('debug')
+                    class_num = class_assign(caption)
+                    if class_num == 10000:
+                        continue
 
-                    f.write(' ' + coord)
+                    x1 = bbox['start_x']
+                    y1 = bbox['start_y']
+                    x2 = bbox['end_x']
+                    y2 = bbox['end_y']
 
-                f.write(' {}'.format(class_num))
-                print('Caption : {} | class_num : {}'.format(caption, class_num))
+                    # if class_num == 10:
+                    #     cv2.rectangle(im, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
+                    #     cv2.imshow('photo', im)
+                    #     cv2.waitKey(0)
+                    #     cv2.destroyAllWindows()
 
-            f.write('\n')
-            count += 1
+                    w = float(x2) - float(x1)
+                    h = float(y2) - float(y1)
+                    if w <= 0 or h <= 0:
+                        if caption in result_dict['error']:
+                            result_dict['error'][caption] += 1
+                        else:
+                            result_dict['error'][caption] = 1
 
-            print('{} processed'.format(count))
+                        # cv2.rectangle(im, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
+                        # cv2.imshow('photo', im)
+                        # cv2.waitKey(0)
+                        # cv2.destroyAllWindows()
+                        # raise ValueError
+
+                    bbox_xyxy = [x1, y1, x2, y2]
+                    for coord in bbox_xyxy:
+                        coord = str(int(coord))
+
+                        f.write(' ' + coord)
+
+                    f.write(' {}'.format(class_num))
+                    print('Caption : {} | class_num : {}'.format(caption, class_num))
+
+                f.write('\n')
+                count += 1
+
+                print('{} processed'.format(count))
 
     f_1.close()
     f_2.close()
