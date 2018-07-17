@@ -1,0 +1,16 @@
+demo/
+experiments/
+pretrained/
+venv/
+.idea/
+configs/__pycache__
+evaluations/__pycache__
+loss/__pycache__
+metrics/__pycache__
+modellibs/__pycache__
+trainer/__pycache__
+transforms/__pycache__
+utils/__pycache__
+datasets/__pycache__
+
+*.json
