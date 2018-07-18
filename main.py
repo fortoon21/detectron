@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--data_root_dir', type=str, default='/home/jade/ws/vdotdo')
 
-    parser.add_argument('--batch_size_train', type=int, default=128)
+    parser.add_argument('--batch_size_train', type=int, default=64)
     parser.add_argument('--batch_size_valid', type=int, default=32)
     parser.add_argument('--batch_size_test', type=int, default=32)
 

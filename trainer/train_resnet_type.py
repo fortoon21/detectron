@@ -58,6 +58,7 @@ class Trainer(object):
 
         train_loss = 0
         for batch_idx, (inputs, label) in enumerate(self.train_dataloader):
+
             inputs = inputs.to(self.opt.device)
             label = label.to(self.opt.device)
 

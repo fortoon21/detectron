@@ -70,17 +70,22 @@ class V_Caption_Resnet_Type(data.Dataset):
         '''
         # Load image and boxes.
         fname = self.fnames[idx]
-        img = Image.open(os.path.join(self.root, fname))
+        try:
+            img = Image.open(os.path.join(self.root, fname))
+            if img.mode != 'RGB':
+                img = img.convert('RGB')
 
-        if img.mode != 'RGB':
-            img = img.convert('RGB')
+            labels = self.labels[idx][0].clone()
 
-        labels = self.labels[idx][0].clone()
+            if self.transform:
+                img = self.transform(img)
 
-        if self.transform:
-            img = self.transform(img)
+            return img, labels
+        except:
+            raise ValueError
 
-        return img, labels
+
+
 
     def __len__(self):
         return self.num_imgs
