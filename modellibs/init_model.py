@@ -124,12 +124,20 @@ def init_model(opt):
             from modellibs.resnet_nas.resnet_nas import resnet50_nas
             model = resnet50_nas(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
 
+    elif model_name == 'resnet_type':
+        if opt.resnet_model == 'resnet18':
+            from modellibs.resnet_type.resnet_type import resnet18_type
+            model = resnet18_type(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
+        elif opt.resnet_model == 'resnet50':
+            from modellibs.resnet_type.resnet_type import resnet50_type
+            model = resnet50_type(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
+
     else:
         raise ValueError('Not implemented yet')
 
     if opt.device == 'cuda':
         model = model.to(opt.device)
-        model = torch.nn.DataParallel(model, device_ids=opt.num_gpus)
+        #model = torch.nn.DataParallel(model, device_ids=opt.num_gpus)
         torch.backends.cudnn.benchmark = True
 
     return model
