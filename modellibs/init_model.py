@@ -132,12 +132,36 @@ def init_model(opt):
             from modellibs.resnet_type.resnet_type import resnet50_type
             model = resnet50_type(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
 
+    elif model_name == 'resnet_num':
+        if opt.resnet_model == 'resnet18':
+            from modellibs.resnet_type.resnet_num import resnet18_num
+            model = resnet18_num(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
+        elif opt.resnet_model == 'resnet50':
+            from modellibs.resnet_type.resnet_num import resnet50_num
+            model = resnet50_num(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
+
+    elif model_name == 'resnet_alp':
+        if opt.resnet_model == 'resnet18':
+            from modellibs.resnet_type.resnet_alp import resnet18_alp
+            model = resnet18_alp(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
+        elif opt.resnet_model == 'resnet50':
+            from modellibs.resnet_type.resnet_alp import resnet50_alp
+            model = resnet50_alp(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
+
+    elif model_name == 'resnet_su,':
+        if opt.resnet_model == 'resnet18':
+            from modellibs.resnet_type.resnet_sym import resnet18_sym
+            model = resnet18_sym(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
+        elif opt.resnet_model == 'resnet50':
+            from modellibs.resnet_type.resnet_sym import resnet50_sym
+            model = resnet50_sym(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
+
     else:
         raise ValueError('Not implemented yet')
 
     if opt.device == 'cuda':
         model = model.to(opt.device)
-        #model = torch.nn.DataParallel(model, device_ids=opt.num_gpus)
+        model = torch.nn.DataParallel(model, device_ids=opt.num_gpus)
         torch.backends.cudnn.benchmark = True
 
     return model

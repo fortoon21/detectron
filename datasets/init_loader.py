@@ -108,11 +108,39 @@ def init_dataloader_train(opt):
                                        num_workers=opt.num_workers,
                                        pin_memory=True)
 
-    elif dataset_name == 'v_caption_patch_nas':
-        from datasets.v_caption_patch_nas import V_Caption_Patch_NAS
+    elif dataset_name == 'v_caption_patch_num':
+        from datasets.v_caption_patch_num import V_Caption_Patch_Num
         data_root = os.path.join(opt.data_root_dir, '')
-        list_file = ['data/v_caption_detection/bgalphabet_patch_train.txt','data/v_caption_detection/bgsymbol_patch_train.txt','data/v_caption_detection/bgnumber_patch_train.txt']
-        dataset = V_Caption_Patch_NAS(root=data_root,
+        list_file = 'data/v_caption_detection/bgnumber_patch_train.txt'
+        dataset = V_Caption_Patch_Num(root=data_root,
+                                 list_file=list_file,
+                                 transform=transform)
+
+        loader = dataloader.DataLoader(dataset=dataset,
+                                       batch_size=batch_size,
+                                       shuffle=True,
+                                       num_workers=opt.num_workers,
+                                       pin_memory=True)
+
+    elif dataset_name == 'v_caption_patch_alp':
+        from datasets.v_caption_patch_alp import V_Caption_Patch_Alp
+        data_root = os.path.join(opt.data_root_dir, '')
+        list_file = 'data/v_caption_detection/bgalphabet_patch_train.txt'
+        dataset = V_Caption_Patch_Alp(root=data_root,
+                                 list_file=list_file,
+                                 transform=transform)
+
+        loader = dataloader.DataLoader(dataset=dataset,
+                                       batch_size=batch_size,
+                                       shuffle=True,
+                                       num_workers=opt.num_workers,
+                                       pin_memory=True)
+
+    elif dataset_name == 'v_caption_patch_sym':
+        from datasets.v_caption_patch_sym import V_Caption_Patch_Sym
+        data_root = os.path.join(opt.data_root_dir, '')
+        list_file ='data/v_caption_detection/bgsymbol_patch_train.txt'
+        dataset = V_Caption_Patch_Sym(root=data_root,
                                  list_file=list_file,
                                  transform=transform)
 
@@ -228,13 +256,56 @@ def init_dataloader_valid(opt):
         loader = dataloader.DataLoader(dataset=dataset,
                                        batch_size=batch_size,
                                        shuffle=False,
-                                       num_workers=opt.num_workers)
+                                       num_workers=opt.num_workers,
+                                       )
 
     elif dataset_name == 'v_caption_patch':
         from datasets.v_caption_patch import V_Caption_Patch
         data_root = os.path.join(opt.data_root_dir, '')
         list_file = 'data/v_caption_patch_hangul/patch_val.txt'
         dataset = V_Caption_Patch(root=data_root,
+                                 list_file=list_file,
+                                 transform=transform)
+
+        loader = dataloader.DataLoader(dataset=dataset,
+                                       batch_size=batch_size,
+                                       shuffle=False,
+                                       num_workers=opt.num_workers,
+                                       pin_memory=True)
+
+    elif dataset_name == 'v_caption_patch_num':
+        from datasets.v_caption_patch_num import V_Caption_Patch_Num
+        data_root = os.path.join(opt.data_root_dir, '')
+        list_file = 'data/v_caption_detection/bgnumber_patch_val.txt'
+        dataset = V_Caption_Patch_Num(root=data_root,
+                                 list_file=list_file,
+                                 transform=transform)
+
+        loader = dataloader.DataLoader(dataset=dataset,
+                                       batch_size=batch_size,
+                                       shuffle=False,
+                                       num_workers=opt.num_workers,
+                                       pin_memory=True)
+
+    elif dataset_name == 'v_caption_patch_alp':
+        from datasets.v_caption_patch_alp import V_Caption_Patch_Alp
+        data_root = os.path.join(opt.data_root_dir, '')
+        list_file = 'data/v_caption_detection/bgalphabet_patch_val.txt'
+        dataset = V_Caption_Patch_Alp(root=data_root,
+                                 list_file=list_file,
+                                 transform=transform)
+
+        loader = dataloader.DataLoader(dataset=dataset,
+                                       batch_size=batch_size,
+                                       shuffle=False,
+                                       num_workers=opt.num_workers,
+                                       pin_memory=True)
+
+    elif dataset_name == 'v_caption_patch_sym':
+        from datasets.v_caption_patch_sym import V_Caption_Patch_Sym
+        data_root = os.path.join(opt.data_root_dir, '')
+        list_file ='data/v_caption_detection/bgsymbol_patch_train.txt'
+        dataset = V_Caption_Patch_Sym(root=data_root,
                                  list_file=list_file,
                                  transform=transform)
 
