@@ -11,7 +11,7 @@ import torchvision.transforms as transforms
 from PIL import Image
 
 
-class V_Caption_Patch_Alp(data.Dataset):
+class V_Caption_Patch_Sym(data.Dataset):
     '''Load image/labels/boxes from a list file.
     The list file is like:
       a.jpg xmin ymin xmax ymax label xmin ymin xmax ymax label ...

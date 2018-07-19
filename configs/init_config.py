@@ -8,6 +8,9 @@ from configs.chanet import chanet_config
 from configs.fpnssd_v_caption import fpnssd_v_caption_config
 from configs.resnet_nas import resnet_nas_config
 from configs.resnet_type import resnet_type_config
+from configs.resnet_num import resnet_num_config
+from configs.resnet_sym import resnet_sym_config
+from configs.resnet_alp import resnet_alp_config
 
 def init_config(args):
 
@@ -45,6 +48,15 @@ def init_config(args):
 
     elif model_name=='resnet_type':
         opt=resnet_type_config(args)
+
+    elif model_name=='resnet_num':
+        opt=resnet_num_config(args)
+
+    elif model_name=='resnet_alp':
+        opt=resnet_alp_config(args)
+
+    elif model_name=='resnet_sym':
+        opt=resnet_sym_config(args)
     else:
         raise ValueError('[!] model not found!')
 

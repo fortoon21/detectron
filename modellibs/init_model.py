@@ -148,7 +148,7 @@ def init_model(opt):
             from modellibs.resnet_type.resnet_alp import resnet50_alp
             model = resnet50_alp(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
 
-    elif model_name == 'resnet_su,':
+    elif model_name == 'resnet_sym':
         if opt.resnet_model == 'resnet18':
             from modellibs.resnet_type.resnet_sym import resnet18_sym
             model = resnet18_sym(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
