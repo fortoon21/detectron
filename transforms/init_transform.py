@@ -35,7 +35,7 @@ def init_transforms(opt, subset):
         from modellibs.resnet.transforms import ResnetAugmentation
         transform = ResnetAugmentation(opt, subset)
 
-    elif model_name in ['resnet_type']:
+    elif model_name in ['resnet_type', 'resnet_num', 'resnet_alp', 'resnet_sym']:
         from modellibs.resnet.transforms import ResnetAugmentation
         transform = ResnetAugmentation(opt, subset)
     else:
