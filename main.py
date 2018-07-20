@@ -8,7 +8,6 @@ from evaluations.init_eval import init_eval
 from configs.init_config import init_config
 from utils.save_files import save_files
 
-
 if __name__ == "__main__":
 
     # torch.multiprocessing.set_start_method("spawn", force=True)
@@ -16,9 +15,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--command', type=str, default='train')
-    parser.add_argument('--dataset', type=str, default='v_caption_patch_num')
+    parser.add_argument('--dataset', type=str, default='v_caption_patch_alp')
     parser.add_argument('--task', type=str, default='classification')
-    parser.add_argument('--model', type=str, default='resnet_num')
+    parser.add_argument('--model', type=str, default='resnet_alp')
     parser.add_argument('--resume', type=bool, default=False)
     parser.add_argument('--resume_path', type=str, default='/home/jade/ws/detectron/experiments/v_caption_patch_type_classification_resnet_type/v_caption_patch_type_classif'
                                                            'ication_resnet_type_best_loss_0.051848/model_best.pth')
@@ -30,7 +29,7 @@ if __name__ == "__main__":
     parser.add_argument('--batch_size_test', type=int, default=32)
 
     parser.add_argument('--num_workers', type=int, default=8)
-    parser.add_argument('--num_gpus', type=str, default=[0])
+    parser.add_argument('--num_gpus', type=str, default=[1])
 
     parser.add_argument('--print_freq', type=int, default=10)
     parser.add_argument('--print_freq_eval', type=int, default=100)
@@ -38,7 +37,7 @@ if __name__ == "__main__":
     parser.add_argument('--start_epochs', type=int, default=1)
     parser.add_argument('--max_epochs', type=int, default=90)
 
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = 'cuda:1' if torch.cuda.is_available() else 'cpu'
 
     if parser.parse_args().command == 'train':
 

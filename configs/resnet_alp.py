@@ -1,7 +1,7 @@
 
 def resnet_alp_config(args):
 
-    args.add_argument('--resnet_model', type=str, default='resnet18')
+    args.add_argument('--resnet_model', type=str, default='resnet50')
     args.add_argument('--img_size', type=int, default=96)
 
     # v_caption_patch_hangul

@@ -200,8 +200,8 @@ def write_txtnimg(f, root, info,  img):
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--anno_root", type=str, default="/home/jade/ws/vdotdo")
-    parser.add_argument("--valid_set", type=list, default=['000481', '000482', '001293', '001294', '001771', '001772'])
+    parser.add_argument("--anno_root", type=str, default="/home/user/VDO/Dataset/v_caption")
+    parser.add_argument("--valid_set", type=list, default=['000120', '000121', '000122', '000140', '000141', '000142', '000300', '000301', '000302'])
     parser.add_argument("--save_dir", type=str, default='hangul_patch')
     parser.add_argument("--task_name", type=str, default='background_result')
 
@@ -228,7 +228,7 @@ if __name__=='__main__':
 
 
     anno_dic={}
-    json_files = [pos_json for pos_json in os.listdir(args.anno_root) if pos_json.endswith('.json') and pos_json.startswith('back') ]
+    json_files = [pos_json for pos_json in os.listdir(args.anno_root) if pos_json.endswith('.json') and pos_json.startswith('ocr') ]
 
 
     for file in json_files:
@@ -273,14 +273,14 @@ if __name__=='__main__':
             clip_name = clip['clip_name']
 
             divider = random.randint(0, 9)
-            if divider <= 1:
-                f = [f_h2, f_a2,f_n2, f_s2] # validation set
-            else:
-                f = [f_h1, f_a1, f_n1, f_s1]  # training set
-            # if clip_name in args.valid_set:
-            #     f =  [f_h2, f_a2,f_n2] # validation set
+            # if divider <= 1:
+            #     f = [f_h2, f_a2,f_n2, f_s2] # validation set
             # else:
-            #     f = [f_h1, f_a1,f_n1] # training set
+            #     f = [f_h1, f_a1, f_n1, f_s1]  # training set
+            if clip_name in args.valid_set:
+                f = [f_h2, f_a2, f_n2, f_s2] # validation set
+            else:
+                f = [f_h1, f_a1, f_n1, f_s1] # training set
 
             clip_count = 0
             for image in clip['images']:
@@ -377,8 +377,11 @@ if __name__=='__main__':
                             write_txtnimg(f[2], anno_root,[clip_name, image_name_edited, sub_count, save_dirn], cropped_img)
                             f[2].write(' '+str(class_num)+'\n')
                         else :
-                            write_txtnimg(f[3], anno_root, [clip_name, image_name_edited, sub_count, save_dirs],
-                                          cropped_img)
+                            try:
+                                write_txtnimg(f[3], anno_root, [clip_name, image_name_edited, sub_count, save_dirs],
+                                              cropped_img)
+                            except:
+                                print('debug')
                             f[3].write(' ' + str(class_num) + '\n')
 
                         sub_count+=1
