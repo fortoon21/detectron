@@ -73,7 +73,24 @@ def init_trainer(opt, trainloader, validloader, model):
                           trainloader,
                           validloader,
                           model)
-
+    elif model_name == 'resnet_num':
+        from trainer.train_resnet_num import Trainer
+        trainer = Trainer(opt,
+                          trainloader,
+                          validloader,
+                          model)
+    elif model_name == 'resnet_alp':
+        from trainer.train_resnet_alp import Trainer
+        trainer = Trainer(opt,
+                          trainloader,
+                          validloader,
+                          model)
+    elif model_name == 'resnet_sym':
+        from trainer.train_resnet_sym import Trainer
+        trainer = Trainer(opt,
+                          trainloader,
+                          validloader,
+                          model)
 
     else:
         raise ValueError('not a valid model')

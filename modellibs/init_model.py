@@ -134,26 +134,26 @@ def init_model(opt):
 
     elif model_name == 'resnet_num':
         if opt.resnet_model == 'resnet18':
-            from modellibs.resnet_type.resnet_num import resnet18_num
+            from modellibs.resnet_num.resnet_num import resnet18_num
             model = resnet18_num(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
         elif opt.resnet_model == 'resnet50':
-            from modellibs.resnet_type.resnet_num import resnet50_num
+            from modellibs.resnet_num.resnet_num import resnet50_num
             model = resnet50_num(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
 
     elif model_name == 'resnet_alp':
         if opt.resnet_model == 'resnet18':
-            from modellibs.resnet_type.resnet_alp import resnet18_alp
+            from modellibs.resnet_alp.resnet_alp import resnet18_alp
             model = resnet18_alp(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
         elif opt.resnet_model == 'resnet50':
-            from modellibs.resnet_type.resnet_alp import resnet50_alp
+            from modellibs.resnet_alp.resnet_alp import resnet50_alp
             model = resnet50_alp(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
 
     elif model_name == 'resnet_sym':
         if opt.resnet_model == 'resnet18':
-            from modellibs.resnet_type.resnet_sym import resnet18_sym
+            from modellibs.resnet_sym.resnet_sym import resnet18_sym
             model = resnet18_sym(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
         elif opt.resnet_model == 'resnet50':
-            from modellibs.resnet_type.resnet_sym import resnet50_sym
+            from modellibs.resnet_sym.resnet_sym import resnet50_sym
             model = resnet50_sym(pretrained=opt.use_pretrained, opt=opt).to(opt.device)
 
     else:
