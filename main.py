@@ -20,7 +20,8 @@ if __name__ == "__main__":
     parser.add_argument('--task', type=str, default='classification')
     parser.add_argument('--model', type=str, default='resnet_type')
     parser.add_argument('--resume', type=bool, default=True)
-    parser.add_argument('--resume_path', type=str, default='/home/jade/ws/detectron/experiments/v_caption_patch_type_classification_resnet_type/v_caption_patch_type_classification_resnet_type_best_loss_0.094012/model_best.pth')
+    parser.add_argument('--resume_path', type=str, default='/home/jade/ws/detectron/experiments/v_caption_patch_type_classification_resnet_type/v_caption_patch_type_classif'
+                                                           'ication_resnet_type_best_loss_0.051848/model_best.pth')
 
     parser.add_argument('--data_root_dir', type=str, default='/home/jade/ws/vdotdo')
 
