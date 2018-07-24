@@ -200,7 +200,7 @@ def write_txtnimg(f, root, info,  img):
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--anno_root", type=str, default="/home/user/VDO/Dataset/v_caption")
+    parser.add_argument("--anno_root", type=str, default="/home/user/VDO/Dataset/v_caption_patch")
     parser.add_argument("--valid_set", type=list, default=['000120', '000121', '000122', '000140', '000141', '000142', '000300', '000301', '000302'])
     parser.add_argument("--save_dir", type=str, default='hangul_patch')
     parser.add_argument("--task_name", type=str, default='background_result')

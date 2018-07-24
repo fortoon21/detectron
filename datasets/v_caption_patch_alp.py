@@ -36,17 +36,18 @@ class V_Caption_Patch_Alp(data.Dataset):
             os.system('cat %s > %s' % (' '.join(list_file), tmp_file))
             list_file = tmp_file
 
-        with open(list_file) as f:
-            lines = f.readlines()
-            self.num_imgs = len(lines)
+        for file in list_file:
+            with open(list_file) as f:
+                lines = f.readlines()
+                self.num_imgs = len(lines)
 
-        for line in lines:
-            splited = line.strip().split()
-            self.fnames.append(splited[0])
+            for line in lines:
+                splited = line.strip().split()
+                self.fnames.append(splited[0])
 
-            label = []
-            label.append(int(splited[1]))
-            self.labels.append(torch.LongTensor(label))
+                label = []
+                label.append(int(splited[1]))
+                self.labels.append(torch.LongTensor(label))
 
 
     def __getitem__(self, idx):

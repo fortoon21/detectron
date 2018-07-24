@@ -96,8 +96,8 @@ def init_dataloader_train(opt):
 
     elif dataset_name == 'v_caption_patch':
         from datasets.v_caption_patch import V_Caption_Patch
-        data_root = os.path.join(opt.data_root_dir, 'V.DO/V_Caption')
-        list_file = 'data/v_caption_patch_hangul/patch_train.txt'
+        data_root = os.path.join(opt.data_root_dir, '')
+        list_file = 'data/v_caption_detection/bghangul_patch_train.txt'
         dataset = V_Caption_Patch(root=data_root,
                                  list_file=list_file,
                                  transform=transform)
@@ -111,7 +111,7 @@ def init_dataloader_train(opt):
     elif dataset_name == 'v_caption_patch_num':
         from datasets.v_caption_patch_num import V_Caption_Patch_Num
         data_root = os.path.join(opt.data_root_dir, '')
-        list_file = 'data/v_caption_detection/bgnumber_patch_train.txt'
+        list_file = 'data/v_caption_detection/number_patch_train.txt'
         dataset = V_Caption_Patch_Num(root=data_root,
                                  list_file=list_file,
                                  transform=transform)
@@ -125,7 +125,7 @@ def init_dataloader_train(opt):
     elif dataset_name == 'v_caption_patch_alp':
         from datasets.v_caption_patch_alp import V_Caption_Patch_Alp
         data_root = os.path.join(opt.data_root_dir, '')
-        list_file = 'data/v_caption_detection/bgalphabet_patch_train.txt'
+        list_file = ['data/v_caption_detection/bgalphabet_patch_train.txt','data/v_caption_detection/alphabet_patch_train.txt','data/v_caption_detection/bgalphabet_patch_val.txt']
         dataset = V_Caption_Patch_Alp(root=data_root,
                                  list_file=list_file,
                                  transform=transform)
@@ -139,7 +139,7 @@ def init_dataloader_train(opt):
     elif dataset_name == 'v_caption_patch_sym':
         from datasets.v_caption_patch_sym import V_Caption_Patch_Sym
         data_root = os.path.join(opt.data_root_dir, '')
-        list_file ='data/v_caption_detection/bgsymbol_patch_train.txt'
+        list_file =['data/v_caption_detection/symbol_patch_train.txt','data/v_caption_detection/bgsymbol_patch_train.txt','data/v_caption_detection/bgsymbol_patch_val.txt']
         dataset = V_Caption_Patch_Sym(root=data_root,
                                  list_file=list_file,
                                  transform=transform)
@@ -262,7 +262,7 @@ def init_dataloader_valid(opt):
     elif dataset_name == 'v_caption_patch':
         from datasets.v_caption_patch import V_Caption_Patch
         data_root = os.path.join(opt.data_root_dir, '')
-        list_file = 'data/v_caption_patch_hangul/patch_val.txt'
+        list_file = 'data/v_caption_detection/bghangul_patch_val.txt'
         dataset = V_Caption_Patch(root=data_root,
                                  list_file=list_file,
                                  transform=transform)
@@ -276,7 +276,7 @@ def init_dataloader_valid(opt):
     elif dataset_name == 'v_caption_patch_num':
         from datasets.v_caption_patch_num import V_Caption_Patch_Num
         data_root = os.path.join(opt.data_root_dir, '')
-        list_file = 'data/v_caption_detection/bgnumber_patch_val.txt'
+        list_file = 'data/v_caption_detection/number_patch_val.txt'
         dataset = V_Caption_Patch_Num(root=data_root,
                                  list_file=list_file,
                                  transform=transform)
@@ -290,7 +290,7 @@ def init_dataloader_valid(opt):
     elif dataset_name == 'v_caption_patch_alp':
         from datasets.v_caption_patch_alp import V_Caption_Patch_Alp
         data_root = os.path.join(opt.data_root_dir, '')
-        list_file = 'data/v_caption_detection/bgalphabet_patch_val.txt'
+        list_file = ['data/v_caption_detection/alphabet_patch_val.txt']
         dataset = V_Caption_Patch_Alp(root=data_root,
                                  list_file=list_file,
                                  transform=transform)
@@ -304,7 +304,7 @@ def init_dataloader_valid(opt):
     elif dataset_name == 'v_caption_patch_sym':
         from datasets.v_caption_patch_sym import V_Caption_Patch_Sym
         data_root = os.path.join(opt.data_root_dir, '')
-        list_file ='data/v_caption_detection/bgsymbol_patch_train.txt'
+        list_file =['data/v_caption_detection/symbol_patch_val.txt']
         dataset = V_Caption_Patch_Sym(root=data_root,
                                  list_file=list_file,
                                  transform=transform)

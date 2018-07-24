@@ -19,17 +19,15 @@ if __name__ == "__main__":
     parser.add_argument('--task', type=str, default='classification')
     parser.add_argument('--model', type=str, default='resnet_alp')
     parser.add_argument('--resume', type=bool, default=False)
-    parser.add_argument('--resume_path', type=str, default='/home/jade/ws/detectron/experiments/v_caption_patch_type_classification_resnet_type/v_caption_patch_type_classif'
-                                                           'ication_resnet_type_best_loss_0.051848/model_best.pth')
-
-    parser.add_argument('--data_root_dir', type=str, default='/home/user/VDO/Dataset/v_caption')
+    parser.add_argument('--resume_path', type=str, default='/home/user/detectron/experiments/v_caption_patch_alp_classification_resnet_alp/v_caption_patch_alp_classification_resnet_alp_best_loss_0.16/model_best.pth')
+    parser.add_argument('--data_root_dir', type=str, default='/home/user/VDO/Dataset/v_caption/')
 
     parser.add_argument('--batch_size_train', type=int, default=256)
     parser.add_argument('--batch_size_valid', type=int, default=256)
     parser.add_argument('--batch_size_test', type=int, default=32)
 
     parser.add_argument('--num_workers', type=int, default=8)
-    parser.add_argument('--num_gpus', type=str, default=[1])
+    parser.add_argument('--num_gpus', type=str, default=[0])
 
     parser.add_argument('--print_freq', type=int, default=10)
     parser.add_argument('--print_freq_eval', type=int, default=100)
@@ -37,7 +35,7 @@ if __name__ == "__main__":
     parser.add_argument('--start_epochs', type=int, default=1)
     parser.add_argument('--max_epochs', type=int, default=90)
 
-    device = 'cuda:1' if torch.cuda.is_available() else 'cpu'
+    device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 
     if parser.parse_args().command == 'train':
 

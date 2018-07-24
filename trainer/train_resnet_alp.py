@@ -1,15 +1,20 @@
 import os
 import time
+import numpy as np
 import torch
 import torch.optim
 import torch.nn.functional as F
 import torch.nn.init as init
+
+from sklearn.metrics import confusion_matrix
 from torch.autograd import Variable
 from loss.ssd_loss import SSDLoss
 from metrics.voc_eval import voc_eval
 from modellibs.s3fd.box_coder import S3FDBoxCoder
 from utils.average_meter import AverageMeter
+from utils.print_cm import print_cm
 
+ALPHABET='abcdefghijklnmopqrstuvwxyzABCDEFGHIJKLNMOPQRSTUVWXYZ'
 
 class Trainer(object):
 
@@ -28,12 +33,18 @@ class Trainer(object):
 
         self.criterion = torch.nn.CrossEntropyLoss().cuda()
 
-        self.optimizer = torch.optim.Adam(model.parameters(), lr=opt.lr, weight_decay=opt.weight_decay)
+        self.optimizer = torch.optim.Adam(model.parameters(),lr=opt.lr, weight_decay=opt.weight_decay)
 
         self.best_loss = float('inf')
 
         if opt.resume:
+            check_point = torch.load(self.opt.resume_path)
+            self.model.module.load_state_dict(check_point['model'])
             self.optimizer.load_state_dict(torch.load(opt.resume_path)['optimizer'])
+
+            # self.start_epoch = check_point['epoch']
+            # self.best_loss = check_point['best_loss']
+            print('resume finished!')
 
     def train_model(self, max_epoch, learning_rate, layers=None):
 
@@ -58,6 +69,7 @@ class Trainer(object):
 
         train_loss = 0
         for batch_idx, (inputs, label) in enumerate(self.train_dataloader):
+
             inputs = inputs.to(self.opt.device)
             label = label.to(self.opt.device)
 
@@ -102,6 +114,14 @@ class Trainer(object):
                 total_losses.update(loss.item(), inputs.size(0))
 
                 pred = output.data.max(1, keepdim=True)[1].cpu()
+                label_array_temp = label.cpu().numpy()
+                if batch_idx == 0:
+                    pred_array = pred.numpy()[:]
+                    label_array = label_array_temp
+                else:
+                    pred_array = np.concatenate((pred_array, pred.numpy()[:]))
+                    label_array = np.concatenate((label_array, label_array_temp))
+
                 correct += pred.eq(label.cpu().view_as(pred)).sum()
                 batch_time.update(time.time() - end)
                 end = time.time()
@@ -123,7 +143,7 @@ class Trainer(object):
                 'model': self.model.module.state_dict(),
                 'optimizer': self.optimizer.state_dict(),
                 'best_loss': test_loss,
-                'epoch': epoch,
+                'epoch': epoch + 1,
             }
             torch.save(state, os.path.join(self.opt.expr_dir, 'model_best.pth'))
             self.best_loss = test_loss
@@ -131,9 +151,22 @@ class Trainer(object):
         print('Val Accuracy: {}/{} ({:.0f}%)'.format(
             correct, num_test_data, accuracy))
 
+        ALPHABET_list =list(ALPHABET)
+        y_true_list = []
+        y_pred_list = []
+        for i in range(len(pred_array)):
+            y_true = label_array[i]
+            y_pred = pred_array[i][0]
+
+            y_true_list.append(ALPHABET_list[y_true])
+            y_pred_list.append(ALPHABET_list[y_pred])
+
+        cm = confusion_matrix(y_true_list, y_pred_list, ALPHABET_list)
+        print_cm(cm, ALPHABET_list)
+
     def adjust_learning_rate(self, optimizer, epoch):
-        """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
-        self.current_lr = self.opt.lr * (0.1 ** (epoch // 30))
+        """Sets the learning rate to the initial LR decayed by 10 every 25 epochs"""
+        self.current_lr = self.opt.lr * (0.1 ** (epoch // 25))
         for param_group in optimizer.param_groups:
             param_group['lr'] = self.current_lr
 

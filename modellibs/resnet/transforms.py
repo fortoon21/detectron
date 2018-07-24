@@ -22,8 +22,9 @@ class ResnetAugmentation(object):
     def transform_train(self, img):
         img = random_distort.random_distort(img)
         img = transforms.Compose([
-            transforms.RandomResizedCrop(self.opt.img_size),
-            # transforms.Resize(224),
+            # transforms.RandomResizedCrop(self.opt.img_size),
+            transforms.RandomRotation((-5, 5)),
+            transforms.Resize((self.opt.img_size, self.opt.img_size)),
             transforms.ToTensor(),
             transforms.Normalize((0.485,0.456,0.406),(0.229,0.224,0.225))
         ])(img)

@@ -159,7 +159,7 @@ def init_model(opt):
     else:
         raise ValueError('Not implemented yet')
 
-    if opt.device == 'cuda:1':
+    if opt.device == 'cuda:0':
         model = model.to(opt.device)
         model = torch.nn.DataParallel(model, device_ids=opt.num_gpus)
         torch.backends.cudnn.benchmark = True
